@@ -4,3 +4,7 @@
 (package-initialize)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'dracula t)
+(custom-set-variables '(initial-frame-alist (quote ((fullscreen . maximized)))))
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
