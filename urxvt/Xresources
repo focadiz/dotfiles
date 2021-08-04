@@ -20,3 +20,6 @@
 
 URxvt.font: xft:Hack Nerd Font Mono:style=Regular:size=10
 URxvt.cursorBlink: true
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.perl-ext-common: selection-to-clipboard
