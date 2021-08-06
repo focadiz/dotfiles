@@ -16,7 +16,7 @@ set $mod Mod4
 font pango:Hack Nerd Font Mono:monospace 10
 default_border pixel 1
 default_floating_border pixel 1
-gaps inner 10
+gaps inner 5
 gaps outer 10
 smart_gaps on
 
