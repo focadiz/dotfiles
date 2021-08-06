@@ -6,3 +6,4 @@
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
+(set-frame-font "Hack Nerd Font Mono 10" nil t)
