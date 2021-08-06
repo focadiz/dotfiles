@@ -18,8 +18,8 @@
 *.color7: #BFBFBF
 *.color15: #E6E6E6
 
-URxvt.font: xft:Hack Nerd Font Mono:style=Regular:size=10
+URxvt.font: xft:Hack Nerd Font Mono:size=10
 URxvt.cursorBlink: true
 URxvt.scrollBar: false
 URxvt.scrollBar_right: false
-URxvt.internalBorder: 22
+URxvt.internalBorder: 5
