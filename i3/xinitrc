@@ -2,3 +2,4 @@
 
 xrdb -merge ~/.Xresources
 exec i3
+exec feh --bg-scale /usr/share/backgrounds/archlinux/wallpaper-1.png
