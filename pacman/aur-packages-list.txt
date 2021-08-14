@@ -1,0 +1,5 @@
+apple-music-electron
+nerd-fonts-hack
+oh-my-zsh-git
+spotify
+ttf-meslo-nerd-font-powerlevel10k
