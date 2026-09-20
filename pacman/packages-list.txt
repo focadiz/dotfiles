@@ -61,6 +61,7 @@ pkgconf
 playerctl
 qutebrowser
 ranger
+rofi
 rxvt-unicode
 sbt
 scala
