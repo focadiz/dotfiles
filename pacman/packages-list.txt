@@ -122,6 +122,7 @@ xorg-xwayland
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
+xss-lock
 xterm
 yarn
 zsh
