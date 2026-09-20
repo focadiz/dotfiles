@@ -46,6 +46,8 @@ lsd
 m4
 make
 maven
+mpv
+mpv-mpris
 ncdu
 neofetch
 network-manager-applet
@@ -54,7 +56,9 @@ npm
 openssh
 pacman
 patch
+pipewire-pulse
 pkgconf
+playerctl
 qutebrowser
 ranger
 rxvt-unicode
@@ -69,6 +73,7 @@ tree
 visualvm
 weechat
 which
+wireplumber
 xf86-video-vesa
 xorg-bdftopcf
 xorg-docs
