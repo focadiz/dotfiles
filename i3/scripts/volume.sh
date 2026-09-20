@@ -1,7 +1,8 @@
 #!/bin/sh
 # Shared volume control: used by XF86Audio* keybindings and the i3bar
-# volume block (i3blocks.conf), so keypresses and bar clicks/scroll
-# stay consistent and both trigger the same OSD popup.
+# volume block (i3blocks.conf), so keypresses and bar clicks/scroll stay
+# consistent. Sink volume/mute feedback is the bar's [volume] block; mic
+# mute still gets an OSD popup since it has no bar indicator of its own.
 sink=@DEFAULT_SINK@
 source=@DEFAULT_SOURCE@
 
@@ -21,12 +22,6 @@ if [ "$1" = "micmute" ]; then
         notify-send -a volume -r 9994 -u low -h int:value:0 "Microphone" "Muted"
     else
         notify-send -a volume -r 9994 -u low -h int:value:100 "Microphone" "Unmuted"
-    fi
-elif [ -n "$1" ]; then
-    if [ "$mute" = "yes" ]; then
-        notify-send -a volume -r 9993 -u low -h int:value:0 "Volume" "Muted"
-    else
-        notify-send -a volume -r 9993 -u low -h int:value:"$vol" "Volume" "${vol}%"
     fi
 fi
 
