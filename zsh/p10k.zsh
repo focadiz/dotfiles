@@ -104,7 +104,14 @@
   )
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
-  typeset -g POWERLEVEL9K_MODE=nerdfont-complete
+  # The Linux kernel console (TERM=linux, e.g. tty1-6 before X starts) can't render Nerd Font
+  # glyphs at all -- no console font supports them, it's a framebuffer-console limitation, not a
+  # missing-font problem -- so fall back to plain ASCII there and keep the full icon set elsewhere.
+  if [[ "$TERM" == "linux" ]]; then
+    typeset -g POWERLEVEL9K_MODE=ascii
+  else
+    typeset -g POWERLEVEL9K_MODE=nerdfont-complete
+  fi
   # When set to `moderate`, some icons will have an extra space after them. This is meant to avoid
   # icon overlap when using non-monospace fonts. When set to `none`, spaces are not added.
   typeset -g POWERLEVEL9K_ICON_PADDING=none
