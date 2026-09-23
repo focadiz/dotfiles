@@ -1,0 +1,113 @@
+// Dracula theme for rofi (https://draculatheme.com)
+
+configuration {
+    font: "MesloLGS NF 10";
+}
+
+* {
+    bg:        #282A36;
+    selection: #44475A;
+    fg:        #F8F8F2;
+    comment:   #6272A4;
+    purple:    #BD93F9;
+    pink:      #FF79C6;
+    green:     #50FA7B;
+    red:       #FF5555;
+
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+window {
+    width:            40%;
+    padding:          10px;
+    border:           2px;
+    border-color:     @purple;
+    background-color: @bg;
+}
+
+mainbox {
+    spacing:  10px;
+    children: [ inputbar, message, listview ];
+}
+
+inputbar {
+    padding:          6px;
+    background-color: @selection;
+    children:         [ prompt, textbox-prompt-colon, entry ];
+}
+
+prompt {
+    text-color: @pink;
+}
+
+textbox-prompt-colon {
+    expand:     false;
+    str:        ": ";
+    text-color: @pink;
+}
+
+entry {
+    placeholder-color: @comment;
+}
+
+message {
+    border:           0;
+    padding:          6px;
+    background-color: @selection;
+}
+
+listview {
+    border:       0;
+    lines:        8;
+    fixed-height: false;
+    scrollbar:    false;
+    spacing:      2px;
+}
+
+element {
+    padding: 4px 6px;
+}
+
+element normal.normal,
+element alternate.normal,
+element normal.active,
+element alternate.active,
+element normal.urgent,
+element alternate.urgent {
+    background-color: @bg;
+}
+
+element selected.normal,
+element selected.active,
+element selected.urgent {
+    background-color: @selection;
+}
+
+element normal.normal,
+element alternate.normal,
+element selected.normal {
+    text-color: @fg;
+}
+
+element normal.active,
+element alternate.active,
+element selected.active {
+    text-color: @green;
+}
+
+element normal.urgent,
+element alternate.urgent,
+element selected.urgent {
+    text-color: @red;
+}
+
+element-text,
+element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+element-text {
+    highlight: bold #FF79C6;
+}
