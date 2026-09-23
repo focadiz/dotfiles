@@ -1,3 +1,10 @@
+# Dracula palette for the Linux console (tty1-6). Must run before `clear` so the
+# whole screen is repainted with the new background. Only on a real VT: other
+# terminals would swallow the rest of the output as an unterminated OSC sequence.
+if [[ $TERM == linux && $TTY == /dev/tty[0-9]* ]]; then
+  printf '\e]P%s' 0282A36 1FF5555 250FA7B 3F1FA8C 4BD93F9 5FF79C6 68BE9FD 7F8F8F2 \
+                  86272A4 9FF6E6E A69FF94 BFFFFA5 CD6ACFF DFF92DF EA4FFFF FFFFFFF
+fi
 clear
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]

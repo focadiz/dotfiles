@@ -385,6 +385,15 @@
       local  untracked='%244F'  # grey foreground
       local conflicted='%244F'  # grey foreground
     fi
+    # The Linux console only has colors 0-7 (higher ones render as the default color); with the
+    # Dracula palette from zshrc, bold color 0 is the grey comment color.
+    if [[ $TERM == linux ]]; then
+      if (( $1 )); then
+        meta='%B%0F' clean='%b%2F' modified='%b%3F' untracked='%b%6F' conflicted='%b%1F'
+      else
+        meta='%B%0F' clean='%B%0F' modified='%B%0F' untracked='%B%0F' conflicted='%B%0F'
+      fi
+    fi
 
     local res
 
@@ -1604,14 +1613,36 @@
   # separators, frame and status symbols configured explicitly in this file are Nerd Font / Unicode
   # glyphs that the kernel console can't render either, so override them all with ASCII there.
   if [[ $TERM == linux ]]; then
-    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%238F+-'
-    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%238F|-'
-    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%238F+-'
-    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%238F-+'
-    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX='%238F-|'
-    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX='%238F-+'
-    typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%242F|'
-    typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%242F|'
+    # Two lines: info on top, a colored prompt symbol below.
+    typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs newline prompt_char)
+    # Only colors 0-7 work here (see my_git_formatter). With the Dracula palette from zshrc:
+    # 0 background, 1 red, 2 green, 3 yellow, 4 purple, 5 pink, 6 cyan, 7 foreground;
+    # bold makes a color bright, so %B%0F is the grey comment color.
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%B%0F+-%b'
+    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%B%0F|-%b'
+    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%B%0F+-%b'
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%B%0F-+%b'
+    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX='%B%0F-|%b'
+    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX='%B%0F-+%b'
+    typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%B%0F|%b'
+    typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%B%0F|%b'
+    typeset -g POWERLEVEL9K_BACKGROUND=0
+    typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=6
+    typeset -g POWERLEVEL9K_DIR_{,SHORTENED_,ANCHOR_}FOREGROUND=4
+    typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
+    typeset -g POWERLEVEL9K_VCS_{VISUAL_IDENTIFIER_COLOR,CLEAN_FOREGROUND}=2
+    typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=7
+    typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=6
+    typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=3
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=2
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=1
+    typeset -g POWERLEVEL9K_STATUS_{OK,OK_PIPE}_FOREGROUND=2
+    typeset -g POWERLEVEL9K_STATUS_{ERROR,ERROR_SIGNAL,ERROR_PIPE}_FOREGROUND=1
+    typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=3
+    typeset -g POWERLEVEL9K_{BACKGROUND_JOBS,VIRTUALENV,ANACONDA,PYENV,GOENV,ASDF}_FOREGROUND=6
+    typeset -g POWERLEVEL9K_{NODENV,NVM,NODEENV}_FOREGROUND=2
+    typeset -g POWERLEVEL9K_DIRENV_FOREGROUND=3
+    typeset -g POWERLEVEL9K_CONTEXT{,_ROOT,_REMOTE,_REMOTE_SUDO}_FOREGROUND=5
     typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''
     typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=''
     typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
