@@ -20,6 +20,7 @@
 
 ! URxvt.font: xft:Hack Nerd Font Mono:size=10
 URxvt.font: xft:MesloLGS NF:size=11,xft:Noto Sans Symbols 2:size=11
+URxvt.letterSpace: -1
 URxvt.cursorBlink: true
 URxvt.scrollBar: false
 URxvt.scrollBar_right: false
