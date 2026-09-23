@@ -13,7 +13,7 @@ chosen=$(printf '%s\n%s\n%s\n%s\n%s\n%s\n' \
     | rofi -dmenu -i -p "Power" -no-custom)
 
 case "$chosen" in
-    "$lock") i3lock --nofork ;;
+    "$lock") ~/.config/i3/scripts/lock.sh --nofork ;;
     "$logout") i3-msg exit ;;
     "$suspend") systemctl suspend ;;
     "$hibernate") systemctl hibernate ;;

@@ -42,7 +42,7 @@ client.background       #F8F8F2
 # at a genuine fresh i3 startup, not via "i3-msg restart"/"reload" (verified
 # with a trivial exec_always test that never fired on either); this line is
 # correct and will take effect on your next real login.
-exec --no-startup-id setsid xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id setsid xss-lock --transfer-sleep-lock -- ~/.config/i3/scripts/lock.sh --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
