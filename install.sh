@@ -23,4 +23,15 @@ ln -s $PWD/qutebrowser/config.py ~/.config/qutebrowser/config.py
 git clone https://github.com/dracula/qutebrowser.git ~/.config/qutebrowser/dracula
 mkdir -p ~/.config/tmux
 ln -s $PWD/tmux/tmux.conf ~/.config/tmux/tmux.conf
+mkdir -p ~/.config/bat ~/.config/btop ~/.config/lsd ~/.config/broot ~/.config/cava ~/.config/neofetch ~/.config/ranger/colorschemes
+ln -s $PWD/bat/config ~/.config/bat/config
+ln -s $PWD/btop/btop.conf ~/.config/btop/btop.conf
+ln -s $PWD/lsd/config.yaml ~/.config/lsd/config.yaml
+ln -s $PWD/lsd/colors.yaml ~/.config/lsd/colors.yaml
+ln -s $PWD/broot/conf.hjson ~/.config/broot/conf.hjson
+ln -s $PWD/cava/config ~/.config/cava/config
+ln -s $PWD/neofetch/config.conf ~/.config/neofetch/config.conf
+ln -s $PWD/ranger/rc.conf ~/.config/ranger/rc.conf
+ln -s $PWD/ranger/colorschemes/dracula.py ~/.config/ranger/colorschemes/dracula.py
+git config --global --add include.path $PWD/git/dracula.gitconfig
 sudo ln -s $PWD/wallpapers/wallpaper-1.png /usr/share/backgrounds/archlinux/wallpaper-1.png

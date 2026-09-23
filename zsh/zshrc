@@ -58,6 +58,10 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export GROFF_NO_SGR=1  # make groff emit the bold/underline that less recolors
 
+# Dracula colors for jq, via the terminal palette (jq rejects codes longer than
+# 12 chars, so no 24-bit colors): null:false:true:numbers:strings:arrays:objects:keys
+export JQ_COLORS='0;34:0;34:0;34:0;34:0;33:1;39:1;39:0;36'
+
 # Suggest commands from history as you type, in Dracula's comment grey.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6272A4'
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
