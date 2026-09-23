@@ -451,6 +451,12 @@
     # in this case.
     (( VCS_STATUS_HAS_UNSTAGED == -1 )) && res+=" ${modified}─"
 
+    # The Linux console can't draw the arrows/ellipsis above; swap in ASCII.
+    if [[ $TERM == linux ]]; then
+      res=${res//⇣/<}; res=${res//⇡/>}; res=${res//⇠/<-}; res=${res//⇢/->}
+      res=${res//─/-}; res=${res//…/..}
+    fi
+
     typeset -g my_git_format=$res
   }
   functions -M my_git_formatter 2>/dev/null
@@ -1594,6 +1600,34 @@
 
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
+  # POWERLEVEL9K_MODE=ascii (set above for TERM=linux) only covers p10k's built-in icons. The
+  # separators, frame and status symbols configured explicitly in this file are Nerd Font / Unicode
+  # glyphs that the kernel console can't render either, so override them all with ASCII there.
+  if [[ $TERM == linux ]]; then
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%238F+-'
+    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%238F|-'
+    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%238F+-'
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%238F-+'
+    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX='%238F-|'
+    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX='%238F-+'
+    typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%242F|'
+    typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%242F|'
+    typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''
+    typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=''
+    typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
+    typeset -g POWERLEVEL9K_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='>'
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='<'
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='V'
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='^'
+    typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=''
+    typeset -g POWERLEVEL9K_STATUS_{OK,OK_PIPE}_VISUAL_IDENTIFIER_EXPANSION='ok'
+    typeset -g POWERLEVEL9K_STATUS_{ERROR,ERROR_SIGNAL,ERROR_PIPE}_VISUAL_IDENTIFIER_EXPANSION='x'
+    typeset -g POWERLEVEL9K_TIMEWARRIOR_CONTENT_EXPANSION='${P9K_CONTENT:0:24}${${P9K_CONTENT:24}:+..}'
+    typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='${P9K_IP_RX_RATE:+%70F<$P9K_IP_RX_RATE }${P9K_IP_TX_RATE:+%215F>$P9K_IP_TX_RATE }%38F$P9K_IP_IP'
+    typeset -g POWERLEVEL9K_BATTERY_STAGES=''
+  fi
+
   (( ! $+functions[p10k] )) || p10k reload
 }
 
