@@ -1,7 +1,11 @@
 #!/bin/sh
 
 xrdb -merge ~/.Xresources
-feh --bg-scale /usr/share/backgrounds/archlinux/wallpaper-1.png &
+# Dracula galaxy wallpaper (https://github.com/dracula/wallpaper, MIT), found
+# relative to this (symlinked) file. It is ultrawide, so fill the screen and
+# crop the sides rather than stretch it.
+dotfiles=$(dirname "$(dirname "$(readlink -f ~/.xinitrc)")")
+feh --bg-fill "$dotfiles/wallpapers/dracula-galaxy-282a36.png" &
 # Theme Qt 5 and Qt 6 apps via qt5ct/qt6ct (qt6ct also answers to "qt5ct").
 export QT_QPA_PLATFORMTHEME=qt5ct
 
