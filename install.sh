@@ -11,4 +11,6 @@ ln -s $PWD/dunst/dunstrc ~/.config/dunst/dunstrc
 ln -s $PWD/gtk/gtk-3.0/settings.ini ~/.config/gtk-3.0/settings.ini
 ln -s $PWD/gtk/gtk-4.0/settings.ini ~/.config/gtk-4.0/settings.ini
 ln -s $PWD/gtk/gtkrc-2.0 ~/.gtkrc-2.0
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+gsettings set org.gnome.desktop.interface gtk-theme Dracula
 sudo ln -s $PWD/wallpapers/wallpaper-1.png /usr/share/backgrounds/archlinux/wallpaper-1.png
