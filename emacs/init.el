@@ -14,7 +14,7 @@
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (setq inhibit-startup-screen t)
-(set-face-attribute 'default nil :family "MesloLGS NF" :height 120)
+(set-face-attribute 'default nil :family "MesloLGS NF" :height 100)
 (set-fontset-font t 'symbol "Noto Sans Symbols 2" nil 'append)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
