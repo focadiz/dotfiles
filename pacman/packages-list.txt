@@ -68,6 +68,7 @@ rxvt-unicode
 sbt
 scala
 sed
+spotify-player
 sudo
 texinfo
 tor

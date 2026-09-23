@@ -34,6 +34,9 @@ ln -s $PWD/neofetch/config.conf ~/.config/neofetch/config.conf
 ln -s $PWD/ranger/rc.conf ~/.config/ranger/rc.conf
 ln -s $PWD/ranger/colorschemes/dracula.py ~/.config/ranger/colorschemes/dracula.py
 git config --global --add include.path $PWD/git/dracula.gitconfig
+mkdir -p ~/.config/spotify-player
+ln -s $PWD/spotify-player/app.toml ~/.config/spotify-player/app.toml
+ln -s $PWD/spotify-player/theme.toml ~/.config/spotify-player/theme.toml
 # Dracula GRUB theme (https://github.com/dracula/grub). Assumes GRUB is already
 # installed and current (grub-install), as it is right after an Arch install.
 grubtheme=$(mktemp -d)

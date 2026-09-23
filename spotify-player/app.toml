@@ -1,0 +1,2 @@
+# Only overrides; everything else uses spotify-player's defaults.
+theme = "dracula"
