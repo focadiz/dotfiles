@@ -60,6 +60,8 @@ patch
 pipewire-pulse
 pkgconf
 playerctl
+qt5ct
+qt6ct
 qutebrowser
 ranger
 rofi

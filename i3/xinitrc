@@ -2,4 +2,7 @@
 
 xrdb -merge ~/.Xresources
 feh --bg-scale /usr/share/backgrounds/archlinux/wallpaper-1.png &
+# Theme Qt 5 and Qt 6 apps via qt5ct/qt6ct (qt6ct also answers to "qt5ct").
+export QT_QPA_PLATFORMTHEME=qt5ct
+
 exec i3

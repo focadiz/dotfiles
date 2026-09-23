@@ -1,6 +1,6 @@
 apple-music-electron
+dracula-gtk-theme
 nerd-fonts-hack
 oh-my-zsh-git
 spotify
 ttf-meslo-nerd-font-powerlevel10k
-dracula-gtk-theme
