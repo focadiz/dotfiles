@@ -1,4 +1,6 @@
 dracula-gtk-theme
+grok-bot-bin
+grok-build-bin
 nerd-fonts-hack
 oh-my-zsh-git
 spotify
