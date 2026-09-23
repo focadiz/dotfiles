@@ -36,6 +36,11 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Dracula colors for ls and for file lists in tab completion.
+eval "$(dircolors -b ${${(%):-%x}:A:h}/dracula.dircolors)"  # next to the real (symlinked) zshrc
+alias ls='ls --color=auto'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 # Suggest commands from history as you type, in Dracula's comment grey.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6272A4'
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
