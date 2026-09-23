@@ -1,0 +1,23 @@
+{
+    "workbench.colorTheme": "Dracula Theme",
+    "git.suggestSmartCommit": false,
+    "git.autofetch": true,
+    "aws.telemetry": false,
+    "redhat.telemetry.enabled": false,
+    "mule.homeDirectory": "/home/felipe/AnypointCodeBuilder",
+    "mule.controlPlane": "US Cloud",
+    "calva.paredit.defaultKeyMap": "original",
+    "aws.cloudformation.telemetry.enabled": false,
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml"
+    ],
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "editor.fontFamily": "MesloLGS NF",
+    "editor.fontSize": 13,
+    "terminal.integrated.fontSize": 13
+}
