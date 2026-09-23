@@ -1,2 +1,6 @@
 # Only overrides; everything else uses spotify-player's defaults.
 theme = "dracula"
+# No album cover: urxvt can't show images, so it would be drawn as blurry
+# character blocks. A 0-row cover box also gets 0 columns (cover_img_length
+# defaults to auto), so the track details take the full width.
+cover_img_width = 0
