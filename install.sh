@@ -21,4 +21,6 @@ ln -s $PWD/qt/Dracula.conf ~/.config/qt6ct/colors/Dracula.conf
 mkdir -p ~/.config/qutebrowser
 ln -s $PWD/qutebrowser/config.py ~/.config/qutebrowser/config.py
 git clone https://github.com/dracula/qutebrowser.git ~/.config/qutebrowser/dracula
+mkdir -p ~/.config/tmux
+ln -s $PWD/tmux/tmux.conf ~/.config/tmux/tmux.conf
 sudo ln -s $PWD/wallpapers/wallpaper-1.png /usr/share/backgrounds/archlinux/wallpaper-1.png
