@@ -35,7 +35,6 @@ i3-gaps
 i3blocks
 i3lock
 i3status
-intellij-idea-community-edition
 kubectl
 leiningen
 libcurl-gnutls
