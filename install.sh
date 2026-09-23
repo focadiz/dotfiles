@@ -35,3 +35,10 @@ ln -s $PWD/ranger/rc.conf ~/.config/ranger/rc.conf
 ln -s $PWD/ranger/colorschemes/dracula.py ~/.config/ranger/colorschemes/dracula.py
 git config --global --add include.path $PWD/git/dracula.gitconfig
 sudo ln -s $PWD/wallpapers/wallpaper-1.png /usr/share/backgrounds/archlinux/wallpaper-1.png
+# Dracula GRUB theme (https://github.com/dracula/grub). Assumes GRUB is already
+# installed and current (grub-install), as it is right after an Arch install.
+grubtheme=$(mktemp -d)
+git clone https://github.com/dracula/grub.git "$grubtheme"
+sudo cp -r "$grubtheme/dracula" /boot/grub/themes/dracula
+sudo sed -i 's|^#GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/dracula/theme.txt"|' /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
