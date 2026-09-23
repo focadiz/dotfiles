@@ -1,4 +1,3 @@
-apple-music-electron
 dracula-gtk-theme
 nerd-fonts-hack
 oh-my-zsh-git
