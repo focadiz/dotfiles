@@ -18,4 +18,7 @@ ln -s $PWD/qt/qt5ct.conf ~/.config/qt5ct/qt5ct.conf
 ln -s $PWD/qt/qt6ct.conf ~/.config/qt6ct/qt6ct.conf
 ln -s $PWD/qt/Dracula.conf ~/.config/qt5ct/colors/Dracula.conf
 ln -s $PWD/qt/Dracula.conf ~/.config/qt6ct/colors/Dracula.conf
+mkdir -p ~/.config/qutebrowser
+ln -s $PWD/qutebrowser/config.py ~/.config/qutebrowser/config.py
+git clone https://github.com/dracula/qutebrowser.git ~/.config/qutebrowser/dracula
 sudo ln -s $PWD/wallpapers/wallpaper-1.png /usr/share/backgrounds/archlinux/wallpaper-1.png
