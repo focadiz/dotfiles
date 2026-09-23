@@ -46,6 +46,18 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 export GREP_COLORS='ms=01;38;2;255;121;198:mc=01;38;2;255;121;198:fn=38;2;189;147;249:ln=38;2;80;250;123:bn=38;2;80;250;123:se=38;2;98;114;164'
 alias grep='grep --color=auto'
 
+# Dracula colors for man pages (and other bold/underlined text in less), from
+# https://github.com/dracula/man-pages (MIT). The basic colors map to Dracula
+# through the urxvt palette and the console palette above.
+export LESS_TERMCAP_mb=$'\e[1;31m'      # blink: red
+export LESS_TERMCAP_md=$'\e[1;34m'      # bold (headings, options): purple
+export LESS_TERMCAP_so=$'\e[01;45;37m'  # standout (status line, search hits): pink
+export LESS_TERMCAP_us=$'\e[01;36m'     # underline (arguments): cyan
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export GROFF_NO_SGR=1  # make groff emit the bold/underline that less recolors
+
 # Suggest commands from history as you type, in Dracula's comment grey.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6272A4'
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
