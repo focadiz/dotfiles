@@ -16,6 +16,7 @@
 (setq inhibit-startup-screen t)
 (set-face-attribute 'default nil :family "MesloLGS NF" :height 100)
 (set-fontset-font t 'symbol "Noto Sans Symbols 2" nil 'append)
+(load-theme 'dracula t)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
