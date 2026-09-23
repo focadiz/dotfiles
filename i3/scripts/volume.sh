@@ -28,7 +28,7 @@ fi
 pkill -RTMIN+10 i3blocks 2>/dev/null
 
 if [ "$mute" = "yes" ]; then
-    printf 'V: mute\n\n#FF0000\n'
+    printf 'V: mute\n\n#FF5555\n'
 else
-    printf 'V: %s%%\n\n#00FF00\n' "$vol"
+    printf 'V: %s%%\n\n#50FA7B\n' "$vol"
 fi
