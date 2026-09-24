@@ -32,9 +32,6 @@ notifications all match.
 
 These aren't automated (yet):
 
-- **Emacs packages:** in Emacs, `M-x package-install RET cider` and
-  `M-x package-install RET dracula-theme`. `eat` and `claude-code-ide` install
-  themselves on first start (`use-package`).
 - **Browser/app themes** (installed from inside each app, not config files):
   - Firefox: [Dracula Dark Theme](https://addons.mozilla.org/en-US/firefox/addon/dracula-dark-colorscheme/)
   - Brave/Chrome: [Dracula Chrome Theme](https://chromewebstore.google.com/detail/dracula-chrome-theme/gfapcejdoghpoidkfodoiiffaaibpaem)
@@ -46,7 +43,7 @@ These aren't automated (yet):
 
 | Directory | What | Installed to |
 |---|---|---|
-| `emacs/` | Emacs config: Dracula, MesloLGS NF 10pt, no startup screen, CIDER, [claude-code-ide](https://github.com/manzaltu/claude-code-ide.el) with `eat` (`C-c C-'`) | `~/.emacs.d/init.el` |
+| `emacs/` | Emacs config: Dracula, MesloLGS NF 10pt, no startup screen, CIDER, [claude-code-ide](https://github.com/manzaltu/claude-code-ide.el) with `eat` (`C-c C-'`). Packages install themselves on first start (`use-package :ensure`). | `~/.emacs.d/init.el` |
 | `urxvt/` | `Xresources`: Dracula palette, MesloLGS NF 10 with Noto Sans Symbols 2 fallback, `letterSpace: -1` so text matches Emacs | `~/.Xresources` |
 | `zsh/` | `zshrc`, Powerlevel10k (`p10k.zsh`), Dracula syntax highlighting, autosuggestions, `ls`/`grep`/`jq`/man-page colors (`dracula.dircolors`) | `~/.zshrc`, `~/.p10k.zsh` |
 | `i3/` | i3 config (Dracula window borders and bar, MesloLGS NF 10), `xinitrc`, i3blocks status bar and scripts (volume, battery, network, power menu, lock screen) | `~/.config/i3/`, `~/.xinitrc` |

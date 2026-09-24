@@ -16,13 +16,21 @@
 (setq inhibit-startup-screen t)
 (set-face-attribute 'default nil :family "MesloLGS NF" :height 100)
 (set-fontset-font t 'symbol "Noto Sans Symbols 2" nil 'append)
-(load-theme 'dracula t)
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Clojure
+(use-package cider
+  :ensure t
+  :defer t)  ; loaded on demand via its autoloads (clojure-mode, cider-jack-in)
 
 ;; Claude Code IDE integration (https://github.com/manzaltu/claude-code-ide.el)
 (use-package eat
