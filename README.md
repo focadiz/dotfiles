@@ -105,6 +105,8 @@ name), otherwise the new config may not boot.
 
 ### Screen lock
 
-`i3/scripts/lock.sh` runs `i3lock` with the Dracula background; `xss-lock`
-(started from the i3 config) and the power menu both use it. Stock `i3lock`
-can't recolor its unlock ring; that needs `i3lock-color` from the AUR.
+`i3/scripts/lock.sh` locks the screen in Dracula colors; `xss-lock` (started
+from the i3 config) and the power menu both use it. With `i3lock-color` (AUR,
+replaces `i3lock`) it shows a clock and a Dracula ring: purple when idle, pink
+on keypress, red on backspace, cyan while verifying and red on a wrong
+password. With the stock `i3lock` it falls back to the Dracula background only.
