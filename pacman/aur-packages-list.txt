@@ -1,3 +1,6 @@
+brave-bin
+claude-code
+code-marketplace
 dracula-gtk-theme
 grok-bot-bin
 grok-build-bin
@@ -5,6 +8,10 @@ i3lock-color
 neofetch
 oh-my-zsh-git
 scala3
+slack-desktop
+spicetify-cli
 spotify
 ttf-meslo-nerd-font-powerlevel10k
+vscodium-bin
+vscodium-bin-marketplace
 zsh-theme-powerlevel10k
