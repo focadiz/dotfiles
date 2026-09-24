@@ -1,7 +1,9 @@
 dracula-gtk-theme
 grok-bot-bin
 grok-build-bin
-nerd-fonts-hack
+neofetch
 oh-my-zsh-git
+scala3
 spotify
 ttf-meslo-nerd-font-powerlevel10k
+zsh-theme-powerlevel10k

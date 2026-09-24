@@ -1,8 +1,12 @@
 #!/bin/sh
 
 export PWD=$(pwd) 
+mkdir -p ~/.emacs.d ~/.config/i3 ~/.config/rofi ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0
+ln -s $PWD/emacs/init.el ~/.emacs.d/init.el
 ln -s $PWD/i3/xinitrc ~/.xinitrc
 ln -s $PWD/i3/config ~/.config/i3/config
+ln -s $PWD/i3/i3blocks.conf ~/.config/i3/i3blocks.conf
+ln -s $PWD/i3/scripts ~/.config/i3/scripts
 ln -s $PWD/urxvt/Xresources ~/.Xresources
 ln -s $PWD/zsh/zshrc ~/.zshrc
 ln -s $PWD/zsh/p10k.zsh ~/.p10k.zsh

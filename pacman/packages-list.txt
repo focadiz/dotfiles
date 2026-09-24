@@ -7,6 +7,9 @@ bat
 binutils
 bison
 bpytop
+broot
+btop
+cava
 clojure
 cmatrix
 code
@@ -31,10 +34,11 @@ groff
 grub
 gzip
 htop
-i3-gaps
+i3-wm
 i3blocks
 i3lock
 i3status
+jq
 kubectl
 leiningen
 libcurl-gnutls
@@ -49,9 +53,9 @@ maven
 mpv
 mpv-mpris
 ncdu
-neofetch
 network-manager-applet
 networkmanager
+noto-fonts
 npm
 openssh
 pacman
@@ -59,6 +63,7 @@ patch
 pipewire-pulse
 pkgconf
 playerctl
+python
 qt5ct
 qt6ct
 qutebrowser
@@ -66,14 +71,15 @@ ranger
 rofi
 rxvt-unicode
 sbt
-scala
 sed
 spotify-player
 sudo
 texinfo
+tmux
 tor
 torbrowser-launcher
 tree
+ttf-hack-nerd
 visualvm
 weechat
 which
@@ -131,4 +137,3 @@ zsh
 zsh-autosuggestions
 zsh-completions
 zsh-syntax-highlighting
-zsh-theme-powerlevel10k
