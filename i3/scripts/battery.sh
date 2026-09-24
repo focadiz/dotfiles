@@ -1,5 +1,8 @@
 #!/bin/sh
-bat=/sys/class/power_supply/BAT0
+# First battery, if any. With none (e.g. running on AC only), print an empty
+# line so i3blocks hides the block.
+bat=$(ls -d /sys/class/power_supply/BAT* 2>/dev/null | head -1)
+[ -n "$bat" ] || { echo; exit 0; }
 cap=$(cat "$bat/capacity")
 status=$(cat "$bat/status")
 

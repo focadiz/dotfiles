@@ -1,6 +1,7 @@
 # dotfiles
 
-Arch Linux + i3 setup for a ThinkPad X220 (this is the `x220` branch).
+Arch Linux + i3 setup for a ThinkPad X200 (this is the `x200` branch, based on
+`x220`; the status bar scripts detect the WiFi interface and battery).
 
 Everything uses the [Dracula](https://draculatheme.com) theme and the
 **MesloLGS NF** font at **10pt** (a Nerd Font, needed for the Powerlevel10k
