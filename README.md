@@ -33,7 +33,6 @@ notifications all match.
 These aren't automated (yet):
 
 - **Browser/app themes** (installed from inside each app, not config files):
-  - Brave/Chrome: [Dracula Chrome Theme](https://chromewebstore.google.com/detail/dracula-chrome-theme/gfapcejdoghpoidkfodoiiffaaibpaem)
   - Slack: Preferences → Themes → Dark → Custom theme → Import
     `#282A36, #44475A, #50FA7B, #FF5555`
 - **Spotify (optional):** see [Spotify](#spotify) below.
@@ -55,6 +54,7 @@ These aren't automated (yet):
 | `vscode/` | Code - OSS and VSCodium settings, per profile: Dracula Theme, MesloLGS NF 13px for editor and terminal | see [VS Code](#vs-code) |
 | `spotify-player/` | Dracula theme for the terminal Spotify client, album cover off | `~/.config/spotify-player/` |
 | `bat/`, `btop/`, `lsd/`, `broot/`, `cava/`, `neofetch/`, `ranger/` | Dracula themes for each tool | `~/.config/<tool>/` |
+| `brave/` | Policy that installs the [Dracula Chrome Theme](https://chromewebstore.google.com/detail/dracula-chrome-theme/gfapcejdoghpoidkfodoiiffaaibpaem) from the Chrome Web Store (`normal_installed`: it can be disabled or replaced by another theme, but only removed by deleting the policy) | `/etc/brave/policies/managed/dracula.json` (sudo) |
 | `firefox/` | Enterprise policy that installs and activates the [Dracula Dark Theme](https://addons.mozilla.org/en-US/firefox/addon/dracula-dark-colorscheme/) (not locked: you can still switch or remove it) | `/etc/firefox/policies/policies.json` (sudo) |
 | `git/` | Dracula colors for `git diff/status/log/branch`, included from `~/.gitconfig` (which stays out of this public repo) | `git config --global include.path` |
 | `wallpapers/` | Wallpapers; the active one is `dracula-galaxy-282a36.png` (set in `xinitrc`) | — |

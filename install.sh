@@ -45,6 +45,8 @@ ln -s $PWD/spotify-player/theme.toml ~/.config/spotify-player/theme.toml
 python3 $PWD/vscode/link.py
 # Firefox: install and activate the Dracula theme via an enterprise policy.
 sudo install -Dm644 $PWD/firefox/policies.json /etc/firefox/policies/policies.json
+# Brave: install the Dracula theme from the Chrome Web Store via a policy.
+sudo install -Dm644 $PWD/brave/policies.json /etc/brave/policies/managed/dracula.json
 # Dracula GRUB theme (https://github.com/dracula/grub). Assumes GRUB is already
 # installed and current (grub-install), as it is right after an Arch install.
 grubtheme=$(mktemp -d)
