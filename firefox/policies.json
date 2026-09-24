@@ -1,0 +1,16 @@
+{
+  "policies": {
+    "ExtensionSettings": {
+      "{b743f56d-1cc1-4048-8ba6-f9c2ab7aa54d}": {
+        "installation_mode": "normal_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/dracula-dark-colorscheme/latest.xpi"
+      }
+    },
+    "Preferences": {
+      "extensions.activeThemeID": {
+        "Value": "{b743f56d-1cc1-4048-8ba6-f9c2ab7aa54d}",
+        "Status": "default"
+      }
+    }
+  }
+}

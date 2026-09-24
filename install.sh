@@ -43,6 +43,8 @@ ln -s $PWD/spotify-player/app.toml ~/.config/spotify-player/app.toml
 ln -s $PWD/spotify-player/theme.toml ~/.config/spotify-player/theme.toml
 # VS Code (Code - OSS and VSCodium) settings, per profile; rerun after creating profiles.
 python3 $PWD/vscode/link.py
+# Firefox: install and activate the Dracula theme via an enterprise policy.
+sudo install -Dm644 $PWD/firefox/policies.json /etc/firefox/policies/policies.json
 # Dracula GRUB theme (https://github.com/dracula/grub). Assumes GRUB is already
 # installed and current (grub-install), as it is right after an Arch install.
 grubtheme=$(mktemp -d)
