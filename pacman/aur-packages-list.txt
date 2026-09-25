@@ -1,5 +1,4 @@
 brave-bin
-claude-code
 code-marketplace
 dracula-gtk-theme
 grok-bot-bin
