@@ -6,6 +6,21 @@ if [[ $TERM == linux && $TTY == /dev/tty[0-9]* ]]; then
                   86272A4 9FF6E6E A69FF94 BFFFFA5 CD6ACFF DFF92DF EA4FFFF FFFFFFF
 fi
 clear
+# Keep the first prompt at the top of new terminal windows. i3 resizes a new
+# urxvt right after the (instant) prompt is drawn, and urxvt keeps its content
+# anchored to the bottom when the window grows, which leaves the prompt
+# mid-window. So if the window is resized within 3s of startup, clear the
+# screen once, whether the resize lands before or after the line editor starts.
+zmodload zsh/datetime
+typeset -g _first_prompt_t0=$EPOCHREALTIME _first_prompt_lines=${LINES:-0}
+_first_prompt_fix() {
+  (( _first_prompt_lines > 0 && EPOCHREALTIME - _first_prompt_t0 < 3 )) || return 0
+  (( LINES != _first_prompt_lines )) || return 0
+  if zle; then _first_prompt_lines=0; zle clear-screen; fi
+}
+TRAPWINCH() { _first_prompt_fix }
+autoload -Uz add-zle-hook-widget && add-zle-hook-widget line-init _first_prompt_fix
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
