@@ -5,6 +5,19 @@ if [[ $TERM == linux && $TTY == /dev/tty[0-9]* ]]; then
   printf '\e]P%s' 0282A36 1FF5555 250FA7B 3F1FA8C 4BD93F9 5FF79C6 68BE9FD 7F8F8F2 \
                   86272A4 9FF6E6E A69FF94 BFFFFA5 CD6ACFF DFF92DF EA4FFFF FFFFFFF
 fi
+# Wait for i3 to size a new terminal before drawing anything. urxvt starts at
+# its default 80x24 and i3 resizes it a few ms later; urxvt keeps its content
+# anchored to the bottom when the window grows, so anything drawn first (the
+# instant prompt) could end up mid-window. If we're still 80x24, wait up to
+# 0.5s for the resize: zselect returns as soon as SIGWINCH arrives, and zsh
+# updates LINES/COLUMNS. A window that really is 80x24 just waits 0.5s once.
+if [[ -o interactive && $LINES == 24 && $COLUMNS == 80 ]] && zmodload zsh/zselect 2>/dev/null; then
+  for _wait in {1..25}; do
+    zselect -t 2 2>/dev/null
+    [[ $LINES == 24 && $COLUMNS == 80 ]] || break
+  done
+  unset _wait
+fi
 clear
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -65,28 +78,6 @@ export JQ_COLORS='0;34:0;34:0;34:0;34:0;33:1;39:1;39:0;36'
 # Suggest commands from history as you type, in Dracula's comment grey.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6272A4'
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Keep the first prompt at the top of new terminal windows. i3 resizes a new
-# urxvt right around when the first prompt is drawn (often after Powerlevel10k's
-# instant prompt, at urxvt's default 80x24 size), and urxvt keeps its content
-# anchored to the bottom when the window grows, so the prompt could end up
-# mid-window (intermittent; more often on the slow X200).
-# - Clear the screen once, right before the first real prompt, whatever the
-#   resize timing was. zshrc already clears at startup, so nothing is lost.
-#   Written straight to the terminal ($TTY) so Powerlevel10k's instant prompt
-#   doesn't report it as console output during initialization.
-# - A resize while the first prompt is already shown (within 3s): TRAPWINCH.
-zmodload zsh/datetime
-typeset -g _first_prompt_t0=$EPOCHREALTIME
-_first_prompt_precmd() {
-  add-zsh-hook -d precmd _first_prompt_precmd
-  [[ -w $TTY ]] && print -n '\e[H\e[2J' > $TTY
-}
-TRAPWINCH() {
-  (( _first_prompt_t0 && EPOCHREALTIME - _first_prompt_t0 < 3 )) || return 0
-  if zle; then _first_prompt_t0=0; zle clear-screen; fi
-}
-autoload -Uz add-zsh-hook && add-zsh-hook precmd _first_prompt_precmd
 
 # Syntax highlighting with Dracula colors. The plugin must be sourced last.
 source ${${(%):-%x}:A:h}/dracula-syntax-highlighting.zsh  # next to the real (symlinked) zshrc
