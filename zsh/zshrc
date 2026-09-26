@@ -5,6 +5,19 @@ if [[ $TERM == linux && $TTY == /dev/tty[0-9]* ]]; then
   printf '\e]P%s' 0282A36 1FF5555 250FA7B 3F1FA8C 4BD93F9 5FF79C6 68BE9FD 7F8F8F2 \
                   86272A4 9FF6E6E A69FF94 BFFFFA5 CD6ACFF DFF92DF EA4FFFF FFFFFFF
 fi
+# Wait for i3 to size a new terminal before drawing anything. urxvt starts at
+# its default 80x24 and i3 resizes it a few ms later; urxvt keeps its content
+# anchored to the bottom when the window grows, so anything drawn first (the
+# instant prompt) could end up mid-window. If we're still 80x24, wait up to
+# 0.5s for the resize: zselect returns as soon as SIGWINCH arrives, and zsh
+# updates LINES/COLUMNS. A window that really is 80x24 just waits 0.5s once.
+if [[ -o interactive && $LINES == 24 && $COLUMNS == 80 ]] && zmodload zsh/zselect 2>/dev/null; then
+  for _wait in {1..25}; do
+    zselect -t 2 2>/dev/null
+    [[ $LINES == 24 && $COLUMNS == 80 ]] || break
+  done
+  unset _wait
+fi
 clear
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
