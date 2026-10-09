@@ -24,3 +24,5 @@ URxvt.cursorBlink: true
 URxvt.scrollBar: false
 URxvt.scrollBar_right: false
 URxvt.internalBorder: 5
+! HiDPI fix for the 12-inch MacBook Retina panel (added 2026-10-08)
+Xft.dpi: 192

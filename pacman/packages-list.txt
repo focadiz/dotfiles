@@ -47,7 +47,6 @@ m4
 make
 maven
 ncdu
-neofetch
 network-manager-applet
 networkmanager
 npm
@@ -59,7 +58,6 @@ qutebrowser
 ranger
 rxvt-unicode
 sbt
-scala
 sed
 sudo
 texinfo
@@ -121,4 +119,3 @@ zsh
 zsh-autosuggestions
 zsh-completions
 zsh-syntax-highlighting
-zsh-theme-powerlevel10k
