@@ -1,0 +1,9 @@
+# libinput-gestures config for the MacBook 12 trackpad.
+# Starter set - see /etc/libinput-gestures.conf for the full annotated
+# list of options (pinch gestures, diagonal swipes, static workspace
+# grids, etc.) to add more later.
+
+gesture swipe up    3  _internal ws_up
+gesture swipe down  3  _internal ws_down
+gesture swipe left  3  xdotool key alt+Right
+gesture swipe right 3  xdotool key alt+Left
