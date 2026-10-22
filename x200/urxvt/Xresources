@@ -25,3 +25,9 @@ URxvt.cursorBlink: true
 URxvt.scrollBar: false
 URxvt.scrollBar_right: false
 URxvt.internalBorder: 5
+! Disable perl extensions - rxvtperl is ABI-incompatible with the perl
+! build on this archlinux32 (i686) system (added 2026-10-22 for the X60;
+! harmless to leave enabled on x86_64 too, just turns off optional
+! scripting hooks most setups do not rely on for basic terminal use).
+URxvt.perl-ext: 
+URxvt.perl-ext-common: 
