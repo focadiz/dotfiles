@@ -3,6 +3,11 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
+(unless (fboundp (quote use-package))
+  (package-refresh-contents)
+  (package-install (quote use-package)))
+(require (quote use-package))
+(setq use-package-always-ensure t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -36,10 +41,13 @@
 (use-package eat
   :ensure t)
 
-(use-package claude-code-ide
-  :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
-  :bind ("C-c C-'" . claude-code-ide-menu)
-  :custom
-  (claude-code-ide-terminal-backend 'eat)
-  :config
-  (claude-code-ide-emacs-tools-setup))
+;; claude-code-ide needs package-vc-install (Emacs 29+); skip gracefully on
+;; older Emacs (e.g. archlinux32's Emacs 28.2, the newest available there).
+(when (fboundp 'package-vc-install)
+  (use-package claude-code-ide
+    :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
+    :bind ("C-c C-'" . claude-code-ide-menu)
+    :custom
+    (claude-code-ide-terminal-backend 'eat)
+    :config
+    (claude-code-ide-emacs-tools-setup)))
