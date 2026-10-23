@@ -1,0 +1,34 @@
+#!/bin/sh
+# Shared volume control: used by XF86Audio* keybindings and the i3bar
+# volume block (i3blocks.conf), so keypresses and bar clicks/scroll stay
+# consistent. Sink volume/mute feedback is the bar's [volume] block; mic
+# mute still gets an OSD popup since it has no bar indicator of its own.
+sink=@DEFAULT_SINK@
+source=@DEFAULT_SOURCE@
+
+case "$1" in
+    up) pactl set-sink-volume "$sink" +5% ;;
+    down) pactl set-sink-volume "$sink" -5% ;;
+    mute) pactl set-sink-mute "$sink" toggle ;;
+    micmute) pactl set-source-mute "$source" toggle ;;
+esac
+
+vol=$(pactl get-sink-volume "$sink" | grep -m1 -o '[0-9]\+%' | head -1 | tr -d '%')
+mute=$(pactl get-sink-mute "$sink" | awk '{print $2}')
+micmute=$(pactl get-source-mute "$source" | awk '{print $2}')
+
+if [ "$1" = "micmute" ]; then
+    if [ "$micmute" = "yes" ]; then
+        notify-send -a volume -r 9994 -u low -h int:value:0 "Microphone" "Muted"
+    else
+        notify-send -a volume -r 9994 -u low -h int:value:100 "Microphone" "Unmuted"
+    fi
+fi
+
+pkill -RTMIN+10 i3blocks 2>/dev/null
+
+if [ "$mute" = "yes" ]; then
+    printf 'V: mute\n\n#FF5555\n'
+else
+    printf 'V: %s%%\n\n#50FA7B\n' "$vol"
+fi
