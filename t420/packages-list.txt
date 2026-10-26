@@ -1,0 +1,30 @@
+# FreeBSD pkg packages for the t420 i3 WM stack (install via: pkg install -y <names>)
+# No AUR-equivalent here -- everything below is an official FreeBSD package.
+
+xorg-minimal
+xinit
+xrdb
+i3
+rofi
+dunst
+i3blocks
+i3lock-color
+xss-lock
+playerctl
+feh
+rxvt-unicode
+pulseaudio
+dbus
+nerd-fonts-meslo
+nerd-fonts-hack
+dejavu
+noto-basic
+noto-sans-symbols2
+
+# GPU driver (Intel i915, DRM/KMS). IMPORTANT: do NOT install via the
+# `drm-kmod` meta-port on this unit -- it pulls drm-612-kmod, which panics
+# the kernel on this GPU (Sandy Bridge, PCI 8086:0126; confirmed open
+# upstream bug github.com/freebsd/drm-kmod#526). Install the 6.1 branch
+# directly instead:
+#   pkg install -y drm-61-kmod
+# and set kld_list="i915kms" in /etc/rc.conf.
