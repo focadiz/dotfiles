@@ -64,3 +64,19 @@ doas install -m 644 "$PWD/firefox/policies.json" /usr/local/lib/firefox/distribu
 
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 gsettings set org.gnome.desktop.interface gtk-theme Dracula
+
+# The official "MesloLGS NF" font (what powerlevel10k and this Xresources/i3
+# config reference by exact family name) has no FreeBSD package -- the
+# nerd-fonts-meslo package registers under different family names
+# ("MesloLGS Nerd Font" etc.), which silently breaks powerline glyph
+# rendering since fontconfig falls back when the literal name does not
+# match. Fetch the 4 official files directly, same source p10k itself
+# recommends.
+mkdir -p ~/.local/share/fonts/MesloLGS-NF
+cd ~/.local/share/fonts/MesloLGS-NF
+for f in Regular Bold Italic "Bold Italic"; do
+  [ -f "MesloLGS NF ${f}.ttf" ] && continue
+  url="https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20$(echo "$f" | sed "s/ /%20/g").ttf"
+  fetch -o "MesloLGS NF ${f}.ttf" "$url"
+done
+fc-cache -f ~/.local/share/fonts/MesloLGS-NF

@@ -1,12 +1,9 @@
-# Dracula palette for the Linux console (tty1-6). Adapted for FreeBSD: this box
-# has no `linux` TERM/VT equivalent in the same sense (syscons/vt uses its own
-# palette mechanism, not an OSC-escape-settable one the way Linux's VT does),
-# so this block is intentionally a no-op here -- kept for parity/reference
-# with the X200/X220 version, not deleted, in case vt(4) gains similar support.
-if [[ $TERM == linux && $TTY == /dev/tty[0-9]* ]]; then
-  printf '\e]P%s' 0282A36 1FF5555 250FA7B 3F1FA8C 4BD93F9 5FF79C6 68BE9FD 7F8F8F2 \
-                  86272A4 9FF6E6E A69FF94 BFFFFA5 CD6ACFF DFF92DF EA4FFFF FFFFFFF
-fi
+# Dracula palette for the FreeBSD vt(4) console (ttyv0-7): unlike Linux's VT,
+# this isn't something a shell sets per-session via an OSC escape sequence --
+# vt(4) only supports a custom 16-color palette via /boot/loader.conf
+# (kern.vt.color.N.rgb, framebuffer console required -- i915kms here), applied
+# once at boot. See /boot/loader.conf for the actual palette definition; this
+# comment is just a pointer so the connection isn't lost.
 # Wait for i3 to size a new terminal before drawing anything. urxvt starts at
 # its default 80x24 and i3 resizes it a few ms later; urxvt keeps its content
 # anchored to the bottom when the window grows, so anything drawn first (the

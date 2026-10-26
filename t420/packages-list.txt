@@ -125,3 +125,9 @@ qt6ct
 # - qt5ct needs QT_QPA_PLATFORMTHEME=qt5ct exported (set in i3/xinitrc)
 # - FreeBSD's `install -D` does NOT auto-create parent dirs like GNU install's
 #   does -- install.sh's firefox policy step does `mkdir -p` first explicitly.
+
+# "MesloLGS NF" (exact family name powerlevel10k/Xresources/i3 reference) has
+# no FreeBSD package -- nerd-fonts-meslo uses different family names, which
+# silently breaks powerline glyphs. Fetched directly from
+# romkatv/powerlevel10k-media into ~/.local/share/fonts (now scripted in
+# install.sh).
