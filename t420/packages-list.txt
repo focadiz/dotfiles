@@ -92,6 +92,7 @@ pkgconf
 emacs
 maven
 leiningen
+openjdk27   # explicit install (2026-10-26) on top of the openjdk25 maven/leiningen dep -- see gotchas below
 erlang
 elixir
 scala
@@ -122,6 +123,12 @@ qt6ct
 # Gotchas found during setup:
 # - openjdk25 (pulled in by maven/leiningen) needs procfs mounted:
 #     mount -t procfs proc /proc   (and an /etc/fstab line for persistence -- done)
+# - openjdk27 installed alongside openjdk25 (2026-10-26). Multiple JDKs can
+#   coexist on FreeBSD; /usr/local/bin/java(c) is a shared `javavm` wrapper
+#   script that reads /usr/local/etc/javavms and defaults to whichever entry
+#   is listed first (newest-installed goes to the top, so openjdk27 is now
+#   the default -- confirmed via `java -version` and `mvn -version`). No
+#   per-JDK package conflict, nothing else to configure.
 # - qt5ct needs QT_QPA_PLATFORMTHEME=qt5ct exported (set in i3/xinitrc)
 # - FreeBSD's `install -D` does NOT auto-create parent dirs like GNU install's
 #   does -- install.sh's firefox policy step does `mkdir -p` first explicitly.
