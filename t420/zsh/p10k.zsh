@@ -104,10 +104,12 @@
   )
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
-  # The Linux kernel console (TERM=linux, e.g. tty1-6 before X starts) can't render Nerd Font
-  # glyphs at all -- no console font supports them, it's a framebuffer-console limitation, not a
-  # missing-font problem -- so fall back to plain ASCII there and keep the full icon set elsewhere.
-  if [[ "$TERM" == "linux" ]]; then
+  # The bare framebuffer console before startx (TERM=linux on Linux's tty1-6; TERM=xterm but
+  # $TTY=/dev/ttyv* on FreeBSD's vt(4) -- it does NOT report TERM=linux, so that check alone misses
+  # it here) can't render Nerd Font glyphs at all -- no console font supports them, it's a
+  # framebuffer-console limitation, not a missing-font problem -- so fall back to plain ASCII there
+  # and keep the full icon set elsewhere.
+  if [[ "$TERM" == "linux" || "$TTY" == /dev/ttyv* ]]; then
     typeset -g POWERLEVEL9K_MODE=ascii
   else
     typeset -g POWERLEVEL9K_MODE=nerdfont-complete
@@ -385,13 +387,16 @@
       local  untracked='%244F'  # grey foreground
       local conflicted='%244F'  # grey foreground
     fi
-    # The Linux console only has colors 0-7 (higher ones render as the default color); with the
-    # Dracula palette from zshrc, bold color 0 is the grey comment color.
-    if [[ $TERM == linux ]]; then
+    # The bare framebuffer console only has colors 0-7 directly (30-37) plus bright 8-15 via the
+    # aixterm-style 90-97 codes (%F{8}..%F{15}); %B%0F (bold+black) is NOT reliable here -- some
+    # console/terminal implementations special-case bold-on-black as a hardcoded white override
+    # instead of true bright-black, which is exactly backwards from what's wanted (grey, not white).
+    # %F{8} addresses Dracula's grey comment color directly instead, same palette as loader.conf.
+    if [[ $TERM == linux || $TTY == /dev/ttyv* ]]; then
       if (( $1 )); then
-        meta='%B%0F' clean='%b%2F' modified='%b%3F' untracked='%b%6F' conflicted='%b%1F'
+        meta='%F{8}' clean='%2F' modified='%3F' untracked='%6F' conflicted='%1F'
       else
-        meta='%B%0F' clean='%B%0F' modified='%B%0F' untracked='%B%0F' conflicted='%B%0F'
+        meta='%F{8}' clean='%F{8}' modified='%F{8}' untracked='%F{8}' conflicted='%F{8}'
       fi
     fi
 
@@ -460,8 +465,8 @@
     # in this case.
     (( VCS_STATUS_HAS_UNSTAGED == -1 )) && res+=" ${modified}─"
 
-    # The Linux console can't draw the arrows/ellipsis above; swap in ASCII.
-    if [[ $TERM == linux ]]; then
+    # The bare framebuffer console can't draw the arrows/ellipsis above; swap in ASCII.
+    if [[ $TERM == linux || $TTY == /dev/ttyv* ]]; then
       res=${res//⇣/<}; res=${res//⇡/>}; res=${res//⇠/<-}; res=${res//⇢/->}
       res=${res//─/-}; res=${res//…/..}
     fi
@@ -1609,23 +1614,25 @@
 
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
-  # POWERLEVEL9K_MODE=ascii (set above for TERM=linux) only covers p10k's built-in icons. The
+  # POWERLEVEL9K_MODE=ascii (set above for the bare console) only covers p10k's built-in icons. The
   # separators, frame and status symbols configured explicitly in this file are Nerd Font / Unicode
   # glyphs that the kernel console can't render either, so override them all with ASCII there.
-  if [[ $TERM == linux ]]; then
+  if [[ $TERM == linux || $TTY == /dev/ttyv* ]]; then
     # Two lines: info on top, a colored prompt symbol below.
     typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs newline prompt_char)
-    # Only colors 0-7 work here (see my_git_formatter). With the Dracula palette from zshrc:
-    # 0 background, 1 red, 2 green, 3 yellow, 4 purple, 5 pink, 6 cyan, 7 foreground;
-    # bold makes a color bright, so %B%0F is the grey comment color.
-    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%B%0F+-%b'
-    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%B%0F|-%b'
-    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%B%0F+-%b'
-    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%B%0F-+%b'
-    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX='%B%0F-|%b'
-    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX='%B%0F-+%b'
-    typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%B%0F|%b'
-    typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%B%0F|%b'
+    # Colors 0-7 work directly (SGR 30-37); bright 8-15 work via %F{8}..%F{15} (aixterm-style SGR
+    # 90-97), NOT via %B (bold) -- bold-on-black is unreliable on this console (see
+    # my_git_formatter above for the same fix, with the full explanation). With the Dracula palette
+    # from zshrc/loader.conf: 0 background, 1 red, 2 green, 3 yellow, 4 purple, 5 pink, 6 cyan,
+    # 7 foreground, 8 grey/comment (used below for structural separators).
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%F{8}+-'
+    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%F{8}|-'
+    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%F{8}+-'
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%F{8}-+'
+    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX='%F{8}-|'
+    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX='%F{8}-+'
+    typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%F{8}|'
+    typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%F{8}|'
     typeset -g POWERLEVEL9K_BACKGROUND=0
     typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=6
     typeset -g POWERLEVEL9K_DIR_{,SHORTENED_,ANCHOR_}FOREGROUND=4
@@ -1639,6 +1646,10 @@
     typeset -g POWERLEVEL9K_STATUS_{OK,OK_PIPE}_FOREGROUND=2
     typeset -g POWERLEVEL9K_STATUS_{ERROR,ERROR_SIGNAL,ERROR_PIPE}_FOREGROUND=1
     typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=3
+    # Default is 66 (256-color), invisible/white on this console like everything else >7 here.
+    # `time` is always-on (unlike most POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS, which only show up for
+    # specific dev contexts this console rarely hits), so it's worth overriding explicitly.
+    typeset -g POWERLEVEL9K_TIME_FOREGROUND=6
     typeset -g POWERLEVEL9K_{BACKGROUND_JOBS,VIRTUALENV,ANACONDA,PYENV,GOENV,ASDF}_FOREGROUND=6
     typeset -g POWERLEVEL9K_{NODENV,NVM,NODEENV}_FOREGROUND=2
     typeset -g POWERLEVEL9K_DIRENV_FOREGROUND=3
