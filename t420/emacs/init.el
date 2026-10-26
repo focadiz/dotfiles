@@ -1,0 +1,57 @@
+;;; init.el --- Emacs config  -*- lexical-binding: t; -*-
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+(unless (fboundp (quote use-package))
+  (package-refresh-contents)
+  (package-install (quote use-package)))
+(require (quote use-package))
+(setq use-package-always-ensure t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(initial-frame-alist '((fullscreen . maximized)))
+ '(package-selected-packages
+   '(cider claude-code-ide dracula-theme eat jazz-theme request))
+ '(package-vc-selected-packages
+   '((claude-code-ide :url
+		      "https://github.com/manzaltu/claude-code-ide.el"))))
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+(setq inhibit-startup-screen t)
+(set-face-attribute 'default nil :family "MesloLGS NF" :height 100)
+(set-fontset-font t 'symbol "Noto Sans Symbols 2" nil 'append)
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; Clojure
+(use-package cider
+  :ensure t
+  :defer t)  ; loaded on demand via its autoloads (clojure-mode, cider-jack-in)
+
+;; Claude Code IDE integration (https://github.com/manzaltu/claude-code-ide.el)
+(use-package eat
+  :ensure t)
+
+;; claude-code-ide needs package-vc-install (Emacs 29+); skip gracefully on
+;; older Emacs (e.g. archlinux32's Emacs 28.2, the newest available there).
+(when (fboundp 'package-vc-install)
+  (use-package claude-code-ide
+    :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
+    :bind ("C-c C-'" . claude-code-ide-menu)
+    :custom
+    (claude-code-ide-terminal-backend 'eat)
+    :config
+    (claude-code-ide-emacs-tools-setup)))

@@ -1,6 +1,19 @@
-# FreeBSD pkg packages for the t420 i3 WM stack (install via: pkg install -y <names>)
+# FreeBSD pkg packages for the t420 setup (install via: pkg install -y <names>)
 # No AUR-equivalent here -- everything below is an official FreeBSD package.
+# Ported from the X200's packages-list.txt/aur-packages-list.txt, 2026-10-25.
+# Deliberately NOT ported (no FreeBSD build / doesn't fit this box):
+#   code, code-marketplace, vscodium-bin, vscodium-bin-marketplace (VSCode/VSCodium)
+#   brave-bin, spotify, slack-desktop, grok-bot-bin, grok-build-bin, spicetify-cli
+#   networkmanager, network-manager-applet (this box uses plain wpa_supplicant/rc.conf)
+#   docker (no usable native Docker daemon on FreeBSD)
+#   oh-my-zsh-git (not actually referenced by zshrc -- powerlevel10k is sourced directly)
+# Installed via git clone instead of pkg (no FreeBSD package exists):
+#   powerlevel10k -> /usr/local/share/zsh-theme-powerlevel10k (romkatv/powerlevel10k)
+#   dracula-gtk-theme -> /usr/local/share/themes/Dracula (dracula/gtk)
+#   qutebrowser's dracula theme -> ~/.config/qutebrowser/dracula (dracula/qutebrowser,
+#     cloned by install.sh itself, not listed here)
 
+# Window manager / X stack
 xorg-minimal
 xinit
 xrdb
@@ -15,11 +28,88 @@ feh
 rxvt-unicode
 pulseaudio
 dbus
+setxkbmap
+xbacklight
+xdpyinfo
+xev
+xinput
+xkill
+xprop
+xrandr
+xset
+xsetroot
+
+# Fonts
 nerd-fonts-meslo
 nerd-fonts-hack
 dejavu
 noto-basic
 noto-sans-symbols2
+
+# Shell / CLI tools
+git
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+zsh-completions
+tmux
+htop
+tree
+ncdu
+jq
+gawk
+gsed
+findutils
+coreutils
+cmatrix
+bpytop
+btop
+bat
+lsd
+broot
+cava
+py312-ranger
+neofetch
+weechat
+tor
+tor-browser
+
+# Build toolchain / dev tooling
+autoconf
+automake
+libtool
+bison
+flex
+texinfo
+groff
+gettext
+binutils
+gcc14
+gmake
+pkgconf
+
+# Language runtimes / dev environments
+emacs
+maven
+leiningen
+erlang
+elixir
+scala
+kubectl
+visualvm
+node22
+npm-node22
+yarn-node22
+python312
+mpv
+mpv-mpris
+spotify-player
+
+# GUI apps that exist natively on FreeBSD (VSCode/Brave/Spotify-desktop/Slack do not)
+firefox
+qutebrowser
+qt5ct
+qt6ct
 
 # GPU driver (Intel i915, DRM/KMS). IMPORTANT: do NOT install via the
 # `drm-kmod` meta-port on this unit -- it pulls drm-612-kmod, which panics
@@ -28,3 +118,10 @@ noto-sans-symbols2
 # directly instead:
 #   pkg install -y drm-61-kmod
 # and set kld_list="i915kms" in /etc/rc.conf.
+
+# Gotchas found during setup:
+# - openjdk25 (pulled in by maven/leiningen) needs procfs mounted:
+#     mount -t procfs proc /proc   (and an /etc/fstab line for persistence -- done)
+# - qt5ct needs QT_QPA_PLATFORMTHEME=qt5ct exported (set in i3/xinitrc)
+# - FreeBSD's `install -D` does NOT auto-create parent dirs like GNU install's
+#   does -- install.sh's firefox policy step does `mkdir -p` first explicitly.

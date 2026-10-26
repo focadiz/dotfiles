@@ -1,0 +1,94 @@
+# Dracula palette for the Linux console (tty1-6). Adapted for FreeBSD: this box
+# has no `linux` TERM/VT equivalent in the same sense (syscons/vt uses its own
+# palette mechanism, not an OSC-escape-settable one the way Linux's VT does),
+# so this block is intentionally a no-op here -- kept for parity/reference
+# with the X200/X220 version, not deleted, in case vt(4) gains similar support.
+if [[ $TERM == linux && $TTY == /dev/tty[0-9]* ]]; then
+  printf '\e]P%s' 0282A36 1FF5555 250FA7B 3F1FA8C 4BD93F9 5FF79C6 68BE9FD 7F8F8F2 \
+                  86272A4 9FF6E6E A69FF94 BFFFFA5 CD6ACFF DFF92DF EA4FFFF FFFFFFF
+fi
+# Wait for i3 to size a new terminal before drawing anything. urxvt starts at
+# its default 80x24 and i3 resizes it a few ms later; urxvt keeps its content
+# anchored to the bottom when the window grows, so anything drawn first (the
+# instant prompt) could end up mid-window. If we're still 80x24, wait up to
+# 0.5s for the resize: zselect returns as soon as SIGWINCH arrives, and zsh
+# updates LINES/COLUMNS. A window that really is 80x24 just waits 0.5s once.
+if [[ -o interactive && $LINES == 24 && $COLUMNS == 80 ]] && zmodload zsh/zselect 2>/dev/null; then
+  for _wait in {1..25}; do
+    zselect -t 2 2>/dev/null
+    [[ $LINES == 24 && $COLUMNS == 80 ]] || break
+  done
+  unset _wait
+fi
+clear
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ $TERM != linux && -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt autocd extendedglob notify interactive_comments
+unsetopt beep nomatch
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/felipe/.zshrc'
+
+# FreeBSD: no /usr/lib/jvm/default-style symlink convention like Arch has.
+# Derive JAVA_HOME from whichever `javac` is first on PATH instead -- works
+# regardless of which openjdkNN port got pulled in as a maven/leiningen dep.
+if command -v javac >/dev/null 2>&1; then
+  export JAVA_HOME="${$(readlink -f "$(command -v javac)"):h:h}"
+fi
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+source /usr/local/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Dracula colors for ls and for file lists in tab completion.
+# FreeBSD: the GNU tools are `gdircolors`/`gls` (textproc/coreutils package),
+# installed alongside base `dircolors`/`ls` rather than replacing them.
+eval "$(gdircolors -b ${${(%):-%x}:A:h}/dracula.dircolors)"  # next to the real (symlinked) zshrc
+alias ls='gls --color=auto'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# Dracula colors for grep: pink matches, purple file names, green line numbers,
+# grey separators. FreeBSD base grep doesn't support GREP_COLORS the way GNU
+# grep does -- alias to the GNU grep package (textproc/grep, plain `grep` name
+# on FreeBSD, unlike gsed/gls) to get the same behavior as the X200.
+export GREP_COLORS='ms=01;38;2;255;121;198:mc=01;38;2;255;121;198:fn=38;2;189;147;249:ln=38;2;80;250;123:bn=38;2;80;250;123:se=38;2;98;114;164'
+alias grep='grep --color=auto'
+
+# Dracula colors for man pages (and other bold/underlined text in less), from
+# https://github.com/dracula/man-pages (MIT). The basic colors map to Dracula
+# through the urxvt palette and the console palette above.
+export LESS_TERMCAP_mb=$'\e[1;31m'      # blink: red
+export LESS_TERMCAP_md=$'\e[1;34m'      # bold (headings, options): purple
+export LESS_TERMCAP_so=$'\e[01;45;37m'  # standout (status line, search hits): pink
+export LESS_TERMCAP_us=$'\e[01;36m'     # underline (arguments): cyan
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export GROFF_NO_SGR=1  # make groff emit the bold/underline that less recolors
+
+# Dracula colors for jq, via the terminal palette (jq rejects codes longer than
+# 12 chars, so no 24-bit colors): null:false:true:numbers:strings:arrays:objects:keys
+export JQ_COLORS='0;34:0;34:0;34:0;34:0;33:1;39:1;39:0;36'
+
+# Suggest commands from history as you type, in Dracula's comment grey.
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6272A4'
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Syntax highlighting with Dracula colors. The plugin must be sourced last.
+source ${${(%):-%x}:A:h}/dracula-syntax-highlighting.zsh  # next to the real (symlinked) zshrc
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

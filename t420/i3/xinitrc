@@ -6,5 +6,7 @@ xrdb -merge ~/.Xresources
 # crop the sides rather than stretch it.
 dotfiles=$(dirname "$(dirname "$(readlink -f ~/.xinitrc)")")
 feh --bg-fill "$dotfiles/wallpapers/dracula-galaxy-282a36.png" &
+# Theme Qt 5 and Qt 6 apps via qt5ct/qt6ct (qt6ct also answers to "qt5ct").
+export QT_QPA_PLATFORMTHEME=qt5ct
 
 exec i3
