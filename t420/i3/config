@@ -40,6 +40,12 @@ bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/scripts/volume.sh
 bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/scripts/volume.sh mute
 bindsym XF86AudioMicMute exec --no-startup-id ~/.config/i3/scripts/volume.sh micmute
 
+# Screen brightness via FreeBSD's native backlight(8) utility (confirmed working
+# against /dev/backlight/backlight0 -- xbacklight/RANDR don't work here since
+# i915kms on this GPU doesn't expose a backlight property on the output).
+bindsym XF86MonBrightnessUp exec --no-startup-id backlight incr 5
+bindsym XF86MonBrightnessDown exec --no-startup-id backlight decr 5
+
 # Media controls via playerctl
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
